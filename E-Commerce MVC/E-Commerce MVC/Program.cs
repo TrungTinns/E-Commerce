@@ -1,7 +1,15 @@
+using E_Commerce_MVC.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<TeeShopContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TeeShop"));
+});
 
 var app = builder.Build();
 
