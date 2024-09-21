@@ -9,11 +9,11 @@ using E_Commerce_MVC.Data;
 
 namespace E_Commerce_MVC.Controllers
 {
-    public class HangHoasController : Controller
+    public class ProductsController : Controller
     {
         private readonly TeeShopContext _context;
 
-        public HangHoasController(TeeShopContext context)
+        public ProductsController(TeeShopContext context)
         {
             _context = context;
         }
