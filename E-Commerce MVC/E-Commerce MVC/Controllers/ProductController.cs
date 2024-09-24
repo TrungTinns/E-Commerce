@@ -31,5 +31,25 @@ namespace E_Commerce_MVC.Controllers
             });
             return View(result);
         }
+        
+        public IActionResult Search(string? query)
+        {
+            var products = db.HangHoas.AsQueryable();
+            if (query != null)
+            {
+                products = products.Where(p => p.TenHh.Contains(query));
+            }
+
+            var result = products.Select(p => new ProductVM
+            {
+                ProductId = p.MaHh,
+                ProductName = p.TenHh,
+                Price = p.DonGia ?? 0.0,
+                Image = p.Hinh ?? "",
+                Description = p.MoTaDonVi ?? "",
+                ProductType = p.MaLoaiNavigation.TenLoai,
+            });
+            return View(result);
+        }
     }
 }

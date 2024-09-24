@@ -27,6 +27,8 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    @RenderSection("Styles", required: false)
+
 </head>
 <body>
     <div>
@@ -89,7 +91,26 @@
         </div>
         <!-- Navbar End -->
 
-        <div style="min-height:400px">@RenderBody()</div>
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input id="searchText" type="search" class="form-control p-3" placeholder="keywords" aria-describedby="searchButton">
+                            <span id="searchButton" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+        <div style="min-height:400px"class="hero-header">@RenderBody()</div>
         
 
         @await Html.PartialAsync("_Footer")
@@ -108,6 +129,15 @@
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                let url = '/Product/Search?query=' + $("#searchText").val();
+                window.location.href = url;
+            });
+        });
+    </script>
 </body>
 </html>
