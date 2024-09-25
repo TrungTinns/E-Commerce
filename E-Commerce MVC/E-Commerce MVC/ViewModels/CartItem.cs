@@ -7,6 +7,6 @@
         public string Image { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }
-        public double TotalPrice => Quantity * Price;
+        public double Subtotal => Quantity * Price;
     }
 }
