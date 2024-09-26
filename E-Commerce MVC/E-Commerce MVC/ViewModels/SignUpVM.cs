@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace E_Commerce_MVC.ViewModels
 {
-    public class RegisterVM
+    public class SignUpVM
     {
+        [Key]
         [Display(Name = "Username")]
         [Required(ErrorMessage = "*")]
         [MaxLength(20, ErrorMessage = "Must be 6-20 characters")]
