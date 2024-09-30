@@ -55,22 +55,30 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
+                    <a asp-action="Index" asp-controller="Home" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">Home</a>
                             <a asp-controller="Product" asp-action="Index" class="nav-item nav-link">Shop</a>
                             <a asp-controller="User" asp-action="SignUp" class="nav-item nav-link">Register </a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                    <a asp-controller="Cart" asp-action="Index" class="dropdown-item">Cart</a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a asp-controller="User" asp-action="Profile" class="dropdown-item">Profile</a>
+                                        <a asp-controller="User" asp-action="Logout" class="dropdown-item">Logout</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="User" asp-action="SignUp" class="dropdown-item">Sign Up</a>
+                                        <a asp-controller="User" asp-action="SignIn" class="dropdown-item">Sign In</a>
+                                        <a asp-controller="User" asp-action="ForgetPassword" class="dropdown-item">Forget password?</a>
+                                    }
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -80,7 +88,7 @@
                             
                             @await Component.InvokeAsync("Cart")
 
-                            <a href="#" class="my-auto">
+                            <a asp-action="SignIn" asp-controller="User" class="my-auto" title="Sign In">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>
                         </div>
