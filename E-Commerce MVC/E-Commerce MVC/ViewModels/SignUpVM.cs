@@ -9,7 +9,7 @@ namespace E_Commerce_MVC.ViewModels
         [Display(Name = "Username")]
         [Required(ErrorMessage = "*")]
         [MaxLength(20, ErrorMessage = "Must be 6-20 characters")]
-        public string UserID { get; set; }
+        public string MaKh { get; set; }
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "*")]
