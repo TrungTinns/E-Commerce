@@ -96,7 +96,7 @@ namespace E_Commerce_MVC.Controllers
                             {
                                 new Claim(ClaimTypes.Email, users.Email),
                                 new Claim(ClaimTypes.Name, users.HoTen),
-                                new Claim("UserID", users.MaKh),
+                                new Claim(MySetting.CLAIM_USERID, users.MaKh),
                                 new Claim(ClaimTypes.Role, "Customer"),
                             };
                             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
