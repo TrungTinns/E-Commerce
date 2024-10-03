@@ -17,33 +17,32 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
-        <form asp-action="Checkout">
+        <form asp-action="Checkout" asp-controller=" Cart">
             <div class="row g-5">
-                <form asp-action="Checkout" asp-controller="Cart">
-                    <div class="col-md-12 col-lg-6 col-xl-7">
-                        <div class="form-check my-3">
-                            <input type="checkbox" class="form-check-input" id="Related" name="Related" value="0">
-                            <label class="form-check-label" for="Related">Related customer information?</label>
-                        </div>
-                        <div class="form-item delivery-info">
-                            <label class="form-label my-3">Customer<sup>*</sup></label>
-                            <input type="text" name="FullName" class="form-control">
-                        </div>
-                        <div class="form-item delivery-info">
-                            <label class="form-label my-3">Address<sup>*</sup></label>
-                            <input type="text" name="Address" class="form-control" placeholder="House Number Street Name">
-                        </div>
-                        <div class="form-item delivery-info">
-                            <label class="form-label my-3">Phone<sup>*</sup></label>
-                            <input type="text" name="Phone" class="form-control">
-                        </div>
-                        <hr>
-                        <div class="form-item mt-2">
-                            <textarea name="Note" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Order Notes (Optional)"></textarea>
-                        </div>
-                        <button type="submit" class="btn border-secondary text-uppercase text-primary w-100 mt-2">Place Order</button>
+                <div class="col-md-12 col-lg-6 col-xl-7">
+                    <div class="form-check my-3">
+                        <input type="checkbox" class="form-check-input" id="Related" name="Related" value="0">
+                        <label class="form-check-label" for="Related">Related customer information?</label>
                     </div>
-                </form>
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Customer<sup>*</sup></label>
+                        <input type="text" name="FullName" class="form-control">
+                    </div>
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Address<sup>*</sup></label>
+                        <input type="text" name="Address" class="form-control" placeholder="House Number Street Name">
+                    </div>
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Phone<sup>*</sup></label>
+                        <input type="text" name="Phone" class="form-control">
+                    </div>
+                    <hr>
+                    <div class="form-item mt-2">
+                        <textarea name="Note" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Order Notes (Optional)"></textarea>
+                    </div>
+                    <button type="submit" class="btn border-secondary text-uppercase text-primary w-100 mt-2">Place Order</button>
+                </div>
+                <div id="paypal-button-container" style="max-width:1000px;"></div>
                 <div class="col-md-12 col-lg-6 col-xl-5">
                     <div class="table-responsive">
                         <table class="table">
@@ -164,20 +163,49 @@
     </div>
 </div>
 <!-- Checkout Page End -->
-
 @section Scripts {
+    <script src="https://sandbox.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientId"></script>
     <script>
         $(document).ready(function () {
             $("#Related").change(function () {
                 if ($(this).prop("checked")) {
                     $(this).val(true);
                     $(".delivery-info").addClass("d-none");
-                }else{
+                } else {
                     $(this).val(false);
                     $(".delivery-info").removeClass("d-none")
 
                 }
             });
         });
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'silver',
+                tagline: 'false'
+            },
+            createOrder: (data, actions) => {
+                return fetch("/Cart/create-paypal-order", {
+                    method: "POST",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+                    return response.json();
+                }).then((order) => order.id)
+                    .catch(error => alert(error.message));
+            },
+            onApprove: (data, actions) => {
+                return fetch(`/Cart/capture-paypal-order?orderId=${data.orderID}`, {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+                    
+                    window.location.href = "/Cart/PaymentSuccess";
+                }).catch(error => alert(error.message));
+            }
+        }).render('#paypal-button-container');
     </script>
 }

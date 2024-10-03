@@ -27,8 +27,13 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
     options.LoginPath = "/User/SignIn";
     options.AccessDeniedPath = "/AccessDenied";
-    
 });
+
+builder.Services.AddSingleton(x => new PaypalClient(
+    builder.Configuration["PaypalOptions:AppId"],
+    builder.Configuration["PaypalOptions:AppSecret"],
+    builder.Configuration["PaypalOptions:Mode"]
+));
 
 var app = builder.Build();
 

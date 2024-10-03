@@ -10,10 +10,12 @@ namespace E_Commerce_MVC.Controllers
     public class CartController : Controller
     {
         private readonly TeeShopContext db;
+        private readonly PaypalClient _paypalClient;
 
-        public CartController(TeeShopContext context)
+        public CartController(TeeShopContext context, PaypalClient paypalClient)
         {
             db = context;
+            _paypalClient = paypalClient;
         }
 
         public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(MySetting.CART_KEY) ?? new List<CartItem>();
@@ -28,7 +30,7 @@ namespace E_Commerce_MVC.Controllers
             var cart = Cart;
             var item = cart.SingleOrDefault(p => p.ProductId == id);
             if (item == null)
-            { 
+            {
                 var product = db.HangHoas.SingleOrDefault(p => p.MaHh == id);
                 if (product == null)
                 {
@@ -53,11 +55,11 @@ namespace E_Commerce_MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult RemoveCart(int id) 
+        public IActionResult RemoveCart(int id)
         {
             var cart = Cart;
             var item = cart.SingleOrDefault(p => p.ProductId == id);
-            if (item == null) 
+            if (item == null)
             {
                 cart.Remove(item);
                 HttpContext.Session.Set(MySetting.CART_KEY, cart);
@@ -67,12 +69,13 @@ namespace E_Commerce_MVC.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Checkout() 
+        public IActionResult Checkout()
         {
             if (Cart.Count == 0)
             {
                 return RedirectToAction("/");
             }
+            ViewBag.PaypalClientId = _paypalClient.ClientId;
             return View(Cart);
         }
 
@@ -109,7 +112,7 @@ namespace E_Commerce_MVC.Controllers
                     db.SaveChanges();
 
                     var detail = new List<ChiTietHd>();
-                    foreach(var item in Cart)
+                    foreach (var item in Cart)
                     {
                         detail.Add(new ChiTietHd
                         {
@@ -130,9 +133,55 @@ namespace E_Commerce_MVC.Controllers
                 {
                     db.Database.RollbackTransaction();
                 }
-              
+
             }
             return View(Cart);
+        }
+
+        [Authorize]
+        public IActionResult PaymentSuccess()
+        {
+            return View("Success");
+        }
+
+        #region Paypal payment
+        [Authorize]
+        [HttpPost("/Cart/create-paypal-order")]
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
+        {
+            var subtotal = Cart.Sum(p => p.Subtotal).ToString();
+            var currency = "USD";
+            var RefOrderId = "DH" + DateTime.Now.Ticks.ToString();
+
+            try
+            {
+                var res = await _paypalClient.CreateOrder(subtotal, currency, RefOrderId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var err = new { ex.GetBaseException().Message };
+                return BadRequest(err);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("/Cart/capture-paypal-order")]
+        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var res = await _paypalClient.CaptureOrder(orderID);
+
+                /*Save database later*/
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var err = new { ex.GetBaseException().Message };
+                return BadRequest(err);
+            }
+            #endregion
         }
     }
 }
