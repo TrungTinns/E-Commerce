@@ -88,7 +88,7 @@ namespace E_Commerce_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(payment == "VNPay")
+                if (payment == "VNPay")
                 {
                     var vnPayModel = new VnPaymentRequestModel()
                     {
@@ -210,15 +210,61 @@ namespace E_Commerce_MVC.Controllers
         public IActionResult PaymentCallback()
         {
             var res = _vnPayService.PaymentExecute(Request.Query);
-            if(res == null || res.VnPayResponseCode != "00")
+            if (res == null || res.VnPayResponseCode != "00")
             {
                 TempData["Message"] = $"Unsuccessfully: {res.VnPayResponseCode}";
                 return RedirectToAction("PaymentFail");
             }
 
-            //Save database
-            TempData["Message"] = $"Successfully";
-            return RedirectToAction("PaymentSuccess");
+            var userId = HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_USERID).Value;
+            var user = db.KhachHangs.SingleOrDefault(u => u.MaKh == userId);
+            var bill = new HoaDon
+            {
+                MaKh = userId,
+                HoTen = user.HoTen,
+                DiaChi = user.DiaChi,
+                DienThoai = user.DienThoai,
+                NgayDat = DateTime.Now,
+                CachThanhToan = "VNPay",
+                CachVanChuyen = "",
+                MaTrangThai = 0,  // Giả sử 0 là trạng thái mới
+                GhiChu = res.OrderDescription,
+            };
+
+            db.Database.BeginTransaction();
+            try
+            {
+                db.Add(bill);
+                db.SaveChanges();
+
+                var detail = new List<ChiTietHd>();
+                foreach (var item in Cart)
+                {
+                    detail.Add(new ChiTietHd
+                    {
+                        MaHd = bill.MaHd,
+                        SoLuong = item.Quantity,
+                        DonGia = item.Price,
+                        MaHh = item.ProductId,
+                        GiamGia = 0,
+                    });
+                }
+
+                db.AddRange(detail);
+                db.SaveChanges();
+                db.Database.CommitTransaction();
+
+                HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
+
+                TempData["Message"] = $"Successfully processed payment.";
+                return RedirectToAction("PaymentSuccess");
+            }
+            catch
+            {
+                db.Database.RollbackTransaction();
+                TempData["Message"] = $"Error while saving the bill.";
+                return RedirectToAction("PaymentFail");
+            }
         }
     }
 }
