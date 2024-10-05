@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using E_Commerce_MVC.Helpers;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Authorization;
+using E_Commerce_MVC.Services;
 
 namespace E_Commerce_MVC.Controllers
 {
@@ -11,11 +12,13 @@ namespace E_Commerce_MVC.Controllers
     {
         private readonly TeeShopContext db;
         private readonly PaypalClient _paypalClient;
+        private readonly IVnPayService _vnPayService;
 
-        public CartController(TeeShopContext context, PaypalClient paypalClient)
+        public CartController(TeeShopContext context, PaypalClient paypalClient, IVnPayService vnPayService)
         {
             db = context;
             _paypalClient = paypalClient;
+            _vnPayService = vnPayService;
         }
 
         public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(MySetting.CART_KEY) ?? new List<CartItem>();
@@ -81,10 +84,23 @@ namespace E_Commerce_MVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Checkout(CheckoutVM model)
+        public IActionResult Checkout(CheckoutVM model, string payment = "COD")
         {
             if (ModelState.IsValid)
             {
+                if(payment == "VNPay")
+                {
+                    var vnPayModel = new VnPaymentRequestModel()
+                    {
+                        Amount = Cart.Sum(p => p.Subtotal),
+                        CreatedDate = DateTime.Now,
+                        Description = $"{model.FullName} {model.Phone}",
+                        FullName = model.FullName,
+                        OrderId = new Random().Next(1000, 100000),
+                    };
+                    return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
+                }
+
                 var userId = HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_USERID).Value;
                 var user = new KhachHang();
                 if (model.Related)
@@ -181,7 +197,28 @@ namespace E_Commerce_MVC.Controllers
                 var err = new { ex.GetBaseException().Message };
                 return BadRequest(err);
             }
-            #endregion
+        }
+        #endregion
+
+        [Authorize]
+        public IActionResult PaymentFail()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult PaymentCallback()
+        {
+            var res = _vnPayService.PaymentExecute(Request.Query);
+            if(res == null || res.VnPayResponseCode != "00")
+            {
+                TempData["Message"] = $"Unsuccessfully: {res.VnPayResponseCode}";
+                return RedirectToAction("PaymentFail");
+            }
+
+            //Save database
+            TempData["Message"] = $"Successfully";
+            return RedirectToAction("PaymentSuccess");
         }
     }
 }
