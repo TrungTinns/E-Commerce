@@ -42,31 +42,31 @@ Sao chép mã
 3. **Install Dependencies**
 Open the project in Visual Studio and use the NuGet Package Manager to install the required packages:
 
-Microsoft.EntityFrameworkCore
-Microsoft.EntityFrameworkCore.SqlServer
-Microsoft.EntityFrameworkCore.Tools
-AutoMapper.Extensions.Microsoft.DependencyInjection
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
+- AutoMapper.Extensions.Microsoft.DependencyInjection
 
 4. **Run the Project**
 Build and run the project in Visual Studio. Navigate to https://localhost:xxxx in your browser (the port number will be generated automatically) to view the website.
 
-##Payment Gateway Configuration
+## Payment Gateway Configuration
 PayPal: Integrated with the PayPal JS SDK for seamless transactions.
 VNPAY: Integrated using the VnPayLibrary for handling payments within Vietnam.
 
 ## Libraries and Tools
 Entity Framework Core:
-Microsoft.EntityFrameworkCore
-Microsoft.EntityFrameworkCore.SqlServer
-Microsoft.EntityFrameworkCore.Tools
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
 Security:
-System.Security.Cryptography (MD5, SHA512 for password hashing)
+- System.Security.Cryptography (MD5, SHA512 for password hashing)
 AutoMapper:
-AutoMapper.Extensions.Microsoft.DependencyInjection
+- AutoMapper.Extensions.Microsoft.DependencyInjection
 
 ## Payment Gateway Integration:
-PayPal JS SDK
-VnPayLibrary
+PayPal JS SDK.
+VnPayLibrary.
 
 ## Contributing
 We welcome contributions! If you want to contribute to this project, feel free to submit a pull request or create an issue for any bugs or new feature suggestions.
