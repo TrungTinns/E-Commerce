@@ -1,6 +1,134 @@
 ﻿<form asp-action="Search" asp-controller="Product">
-    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" name="query">
-    <button>
-        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+    <!-- Filters-->
+    <div>
+        <!-- Price Filter -->
+        <div class="py-4 widget-filter widget-filter-price border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="true"
+               aria-controls="filter-modal-price">
+                Price
+            </a>
+            <div id="filter-modal-price" class="collapse show">
+                <div class="filter-price mt-6"></div>
+                <div class="d-flex justify-content-between align-items-center mt-7">
+                    <div class="input-group mb-0 me-2 border">
+                        <span class="input-group-text bg-transparent fs-7 p-2 text-muted border-0">$</span>
+                        <input type="number" min="00" max="1000" step="1" class="filter-min form-control-sm border flex-grow-1 text-muted border-0">
+                    </div>
+                    <div class="input-group mb-0 ms-2 border">
+                        <span class="input-group-text bg-transparent fs-7 p-2 text-muted border-0">$</span>
+                        <input type="number" min="00" max="1000" step="1" class="filter-max form-control-sm flex-grow-1 text-muted border-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Price Filter -->
+        <!-- Brands Filter -->
+        <div class="py-4 widget-filter border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true"
+               aria-controls="filter-modal-brands">
+                Brands
+            </a>
+            <div id="filter-modal-brands" class="collapse show">
+                <div class="input-group my-3 py-1">
+                    <input type="search" class="form-control py-2 filter-search rounded" placeholder="Search"
+                           aria-label="Search" aria-describedby="search-icon-1" name="query">
+                    <span class="input-group-text bg-transparent p-2 position-absolute top-10 end-0 border-0 z-index-20">
+                        <i class="ri-search-2-line text-muted"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- / Brands Filter -->
+        <!-- Sizes Filter -->
+        <div class="py-4 widget-filter border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-sizes" role="button" aria-expanded="true"
+               aria-controls="filter-modal-sizes">
+                Sizes
+            </a>
+            <div id="filter-modal-sizes" class="collapse show">
+                <div class="filter-options mt-3">
+                    <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-0">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-0">6.5</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-1">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-1">7</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-2">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-2">7.5</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-3">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-3">8</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-4">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-4">8.5</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-5">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-5">9</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-6">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-6">9.5</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-7">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-7">10</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-8">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-8">10.5</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-9">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-9">11</label>
+                    </div>              <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-10">
+                        <label class="form-check-label fw-normal" for="filter-sizes-modal-10">11.5</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Sizes Filter -->
+        <!-- Colour Filter -->
+        <div class="py-4 widget-filter border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-colour" role="button" aria-expanded="true"
+               aria-controls="filter-modal-colour">
+                Colour
+            </a>
+            <div id="filter-modal-colour" class="collapse show">
+                <div class="filter-options mt-3">
+                    <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-primary">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-0">
+                        <label class="form-check-label" for="filter-colours-modal-0"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-success">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-1">
+                        <label class="form-check-label" for="filter-colours-modal-1"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-danger">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-2">
+                        <label class="form-check-label" for="filter-colours-modal-2"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-info">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-3">
+                        <label class="form-check-label" for="filter-colours-modal-3"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-warning">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-4">
+                        <label class="form-check-label" for="filter-colours-modal-4"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-dark">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-5">
+                        <label class="form-check-label" for="filter-colours-modal-5"></label>
+                    </div>              <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-secondary">
+                        <input type="checkbox" class="form-check-color-input" id="filter-colours-modal-6">
+                        <label class="form-check-label" for="filter-colours-modal-6"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Colour Filter -->
+    </div>
+    <!-- / Filters-->
+    <!-- Filter Button-->
+    <button class="w-100">
+        <span id="search-icon-1" class="btn btn-dark d-block hover-lift-sm hover-boxshadow" data-bs-dismiss="offcanvas" aria-label="Close">Done</span>
     </button>
+    <!-- /Filter Button-->
 </form>
+

@@ -1,65 +1,126 @@
 ﻿@model E_Commerce_MVC.ViewModels.SignUpVM
 @{
     ViewData["Title"] = "SignUp";
+    Layout = "_Layout";
 }
 
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <h1 class="mb-4">Sign Up</h1>
-        <form asp-action="SignUp" enctype="multipart/form-data">
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-12 col-lg-6">
-                        <div class="form-item w-100">
-                            <label asp-for="@Model.MaKh" class="form-label my-3"></label><sup>*</sup>
-                            <input asp-for="@Model.MaKh" type="text" class="form-control">
-                            <span asp-validation-for="@Model.MaKh" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign Up Page">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <!-- Custom Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/assets/css/libs.bundle.css" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/assets/css/theme.bundle.css" />
+
+    <title>@ViewBag.Title</title>
+
+</head>
+<body class="vh-100 d-flex justify-content-center align-items-center">
+    <!-- Main Section-->
+    <section class="mt-0 vh-100 d-flex justify-content-center align-items-start p-4">
+        <!-- Page Content -->
+        <div class="col col-md-8 col-lg-8">
+            <!-- Logo-->
+            <a class="navbar-brand fw-bold fs-3 flex-shrink-0 order-0 align-self-center justify-content-center d-flex mx-0 px-0" href="./index.html">
+                <div class="d-flex align-items-center">
+                    <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                </div>
+            </a>
+            <!-- / Logo-->
+            <div class="shadow-xl p-4 p-lg-3 bg-white">
+                <h1 class="text-center fw-bold mb-5 fs-2">Register</h1>
+                <form asp-action="SignUp" enctype="multipart/form-data">
+                    <!-- Contact Information Section -->
+                    <div class="mt-5">
+                        <div class="d-flex justify-content-end align-items-center mb-4 border-bottom pb-4">
+                            <small class="text-muted fw-bolder">Already registered? <a asp-controller="User" asp-action="SignIn">Login</a></small>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="@Model.MaKh" class="form-label">First name</label>
+                                    <input type="text" class="form-control" asp-for="@Model.MaKh">
+                                    <span asp-validation-for="@Model.MaKh" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Password" class="form-label"></label>
+                                    <input type="text" class="form-control" asp-for="@Model.Password">
+                                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.FullName" class="form-label"></label>
+                                    <input type="text" class="form-control" asp-for="@Model.FullName">
+                                    <span asp-validation-for="@Model.FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="@Model.Gender" value="true" checked />
+                                        <label class="form-check-label">Male</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="@Model.Gender" value="false" />
+                                        <label class="form-check-label">Female</label>
+                                    </div>
+                                    <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="@Model.BirthDate" class="form-label"></label>
+                                    <input asp-for="@Model.BirthDate" class="form-control">
+                                    <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address" class="form-label"></label>
+                                    <input type="text" class="form-control" asp-for="@Model.Address">
+                                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Phone" class="form-label"></label>
+                                    <input type="text" class="form-control" asp-for="@Model.Phone">
+                                    <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Email" class="form-label"></label>
+                                    <input type="text" class="form-control" asp-for="@Model.Email">
+                                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Image" class="form-label">Image</label>
+                                    <input type ="file" name="Image" class="form-control">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-6">
-                        <label asp-for="@Model.Password" class="form-label my-3"></label><sup>*</sup>
-                        <input asp-for="@Model.Password" class="form-control">
-                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    <div class="d-grid my-5">
+                        <button type="submit" class="btn btn-dark">Create Account</button>
                     </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" asp-for="@Model.FullName"></label><sup>*</sup>
-                        <input asp-for="@Model.FullName" class="form-control">
-                        <span asp-validation-for="@Model.FullName" class="text-danger"></span>
-                    </div>
-                    <div class="form-check my-3">
-                        <input asp-for="@Model.Gender" class="form-check-input">
-                        <label class="form-check-label" for="Gender">Male?</label>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" asp-for="@Model.BirthDate"></label>
-                        <input asp-for="@Model.BirthDate" class="form-control">
-                        <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" asp-for="@Model.Address"></label><sup>*</sup>
-                        <input asp-for="@Model.Address" class="form-control">
-                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" asp-for="@Model.Phone"></label><sup>*</sup>
-                        <input asp-for="@Model.Phone" class="form-control">
-                        <span asp-validation-for="@Model.Phone" class="text-danger"></span>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" asp-for="@Model.Email"></label><sup>*</sup>
-                        <input asp-for="@Model.Email" class="form-control">
-                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-item">
-                        <label class="form-label my-3" for="Image">Image<sup>*</sup></label>
-                        <input type="file" name="Image" class="form-control">
-                    </div>
-                </div>
-                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                    <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Sign Up</button>
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
-
+        </div>
+    </section>
+    <!-- Vendor Scripts -->
+    <script src="~/assets/js/libs.bundle.js"></script>
+    <!-- Main Script -->
+    <script src="~/assets/js/theme.bundle.js"></script>
+</body>
+</html>

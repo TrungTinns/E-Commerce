@@ -2,11 +2,60 @@
     Layout = "_LayoutCustomer.cshtml";
 }
 
-<!-- Single Page Header start -->
-@RenderSection("BreadCum", required: false)
+<!-- Main Section-->
+<section class="mt-0 ">
+    <!-- Category Top Banner -->
+    @RenderSection("Banner", required: false)
+    <!-- Category Top Banner -->
 
-<!-- Single Page Header End -->
-<!-- Fruits Shop Start-->
+    <div class="container-fluid" data-aos="fade-in">
+        <!-- Category Toolbar-->
+        <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
+            @RenderSection("Breadcrumb", required: false)
+            <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
+
+                <!-- Filter Trigger-->
+                <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
+                    <i class="ri-equalizer-line me-2"></i> Filters
+                </button>
+                <!-- / Filter Trigger-->
+                <!-- Sort Options-->
+                <select class="form-select form-select-sm border-0 bg-light p-3 pe-5 lh-1 fs-7">
+                    <option selected>Sort By</option>
+                    <option value="1">Hi Low</option>
+                    <option value="2">Low Hi</option>
+                    <option value="3">Name</option>
+                </select>
+                <!-- / Sort Options-->
+            </div>
+        </div>
+        <!-- /Category Toolbar-->
+        <!-- Products-->
+        <div class="row g-4">
+            <!-- Card Product-->
+            @RenderBody()
+            <!--/ Card Product-->
+        </div>
+    </div>
+    <!-- / Products-->
+
+
+</section>
+
+<!-- Filters Offcanvas-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+    <div class="offcanvas-header pb-0 d-flex align-items-center">
+        <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Category Filters</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="d-flex flex-column justify-content-between w-100 h-100">
+            @await Html.PartialAsync("_SearchPanel")
+        </div>
+    </div>
+</div>
+
+@* <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
         <h1 class="mb-4">TeeShop</h1>
@@ -158,3 +207,4 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
+ *@

@@ -1,212 +1,147 @@
 ﻿@model IEnumerable<E_Commerce_MVC.ViewModels.CartItem>
 @{
     ViewData["Title"] = "Checkout";
+    Layout = "_Layout";
+
 }
 
-<!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Checkout</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Checkout</li>
-    </ol>
-</div>
-<!-- Single Page Header End -->
-<!-- Checkout Page Start -->
-<div class="container-fluid py-5">
-	<div class="container py-5">
-		<h1 class="mb-4">Billing details</h1>
-		<form asp-action="Checkout" asp-controller="Cart">
-			<div class="row g-5">
-				<div class="col-md-12 col-lg-6 col-xl-7">
-					<div class="form-check my-3">
-						<input type="checkbox" name="Related" class="form-check-input" id="Related" value="false">
-						<label class="form-check-label" for="Related">Related information?</label>
-					</div>
-					<div class="form-item delivery-info">
-						<label class="form-label my-3">Receiver<sup>*</sup></label>
-						<input type="text" name="FullName" class="form-control">
-					</div>
-					<div class="form-item delivery-info">
-						<label class="form-label my-3">Address<sup>*</sup></label>
-						<input type="text" name="Address" class="form-control" placeholder="123 Lê Lợi, Quận 1">
-					</div>
-					<div class="form-item delivery-info">
-						<label class="form-label my-3">Phone<sup>*</sup></label>
-						<input type="text" name="Phone" class="form-control">
-					</div>
-					<div class="form-item mt-3">
-						<textarea name="Note" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Note"></textarea>
-					</div>
-					<input type="submit" name="payment" class="btn border-secondary text-uppercase text-primary w-100 mt-2" value="Place Order (COD)">
-					<input type="submit" name="payment" class="btn border-secondary text-uppercase text-primary w-100 mt-2" value="VNPay">
-					<div id="paypal-button-container" class="form-item mt-3" style="max-width:1000px;"></div>
-				</div>
-				<div class="col-md-12 col-lg-6 col-xl-5">
-					<div class="table-responsive">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">Products</th>
-									<th scope="col">Name</th>
-									<th scope="col">Price</th>
-									<th scope="col">Quantity</th>
-									<th scope="col">Total</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (var item in Model)
-								{
-									<tr>
-										<th scope="row">
-											<div class="d-flex align-items-center mt-2">
-												<img src="~/Hinh/HangHoa/@item.Image" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="@item.ProductName">
-											</div>
-										</th>
-										<td class="py-5">@item.ProductName</td>
-										<td class="py-5">$@item.Price</td>
-										<td class="py-5">@item.Quantity</td>
-										<td class="py-5">@item.Subtotal</td>
-									</tr>
-								}
-								<tr>
-									<th scope="row">
-									</th>
-									<td class="py-5"></td>
-									<td class="py-5"></td>
-									<td class="py-5">
-										<p class="mb-0 text-dark py-3">Subtotal</p>
-									</td>
-									<td class="py-5">
-										<div class="py-3 border-bottom border-top">
-											<p class="mb-0 text-dark">$@Model.Sum(p => p.Subtotal).ToString("#,##0.00")</p>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">
-									</th>
-									<td class="py-5">
-										<p class="mb-0 text-dark py-4">Shipping</p>
-									</td>
-									<td colspan="3" class="py-5">
-										<div class="form-check text-start">
-											<input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">
-											<label class="form-check-label" for="Shipping-1">Free Shipping</label>
-										</div>
-										<div class="form-check text-start">
-											<input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
-											<label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
-										</div>
-										<div class="form-check text-start">
-											<input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
-											<label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">
-									</th>
-									<td class="py-5">
-										<p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
-									</td>
-									<td class="py-5"></td>
-									<td class="py-5"></td>
-									<td class="py-5">
-										<div class="py-3 border-bottom border-top">
-											<p class="mb-0 text-dark">$135.00</p>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-						<div class="col-12">
-							<div class="form-check text-start my-3">
-								<input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer">
-								<label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-							</div>
-							<p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-						</div>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-						<div class="col-12">
-							<div class="form-check text-start my-3">
-								<input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">
-								<label class="form-check-label" for="Payments-1">Check Payments</label>
-							</div>
-						</div>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-						<div class="col-12">
-							<div class="form-check text-start my-3">
-								<input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">
-								<label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-							</div>
-						</div>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-						<div class="col-12">
-							<div class="form-check text-start my-3">
-								<input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal">
-								<label class="form-check-label" for="Paypal-1">Paypal</label>
-							</div>
-						</div>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-						<button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- Checkout Page End -->
-@section Scripts {
-    <script src="https://sandbox.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientId"></script>
-    <script>
-        $(document).ready(function () {
-            $("#Related").change(function () {
-                if ($(this).prop("checked")) {
-                    $(this).val(true);
-                    $(".delivery-info").addClass("d-none");
-                } else {
-                    $(this).val(false);
-                    $(".delivery-info").removeClass("d-none")
+<section class="mt-0 overflow-lg-hidden vh-lg-100">
+    <!-- Page Content Goes Here -->
+    <div class="container">
+        <div class="row g-0 vh-lg-100">
+            <div class="col-12 col-lg-7 pt-5 pt-lg-10 vh-100" style="overflow-y: auto;">
+                <div class="pe-lg-5">
+                    <!-- Logo-->
+                    <a asp-action="Index" asp-controller="Home" class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0 order-0">
+                        <div class="d-flex align-items-center">
+                            <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                        </div>
+                    </a>
+                    <!-- / Logo-->
+                    <nav class="d-none d-md-block">
+                        <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                            <li class="me-4">
+                                <a class="nav-link-checkout"
+                                   href="./cart.html">Your Cart</a>
+                            </li>
+                            <li class="me-4">
+                                <a class="nav-link-checkout active"
+                                   asp-action="Checkout" asp-controller="Cart">Information</a>
+                            </li>
+                            <li class="me-4">
+                                <a class="nav-link-checkout "
+                                   href="./checkout-shipping.html">Shipping</a>
+                            </li>
+                            <li>
+                                <a class="nav-link-checkout nav-link-last "
+                                   href="./checkout-payment.html">Payment</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="mt-5">
+                        <div class="pt-4 mt-4 pb-5 border-top d-flex justify-content-between align-items-center">
+                            <!-- Shipping Same Checkbox-->
+                            <div class="form-group form-check m-0">
+                                <input type="checkbox" class="form-check-input" id="same-address" checked>
+                                <label class="form-check-label" for="same-address">Use related information?</label>
+                            </div>
+                        </div>
+                        <!-- Billing Address-->
+                        <div class="billing-address d-none">
+                            <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4">Billing Address</h3>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="addressAddress" class="form-label">Fullname</label>
+                                        <input type="text" class="form-control" id="addressAddress" name="FullName" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="countryAddress" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="addressAddress" name="Address" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="countryAddress" class="form-label">Phone number</label>
+                                        <input type="text" class="form-control" id="addressAddress" name="Phone" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea name="Note" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Note"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Billing Address-->
 
-                }
-            });
-        });
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'silver',
-                tagline: 'false'
-            },
-            createOrder: (data, actions) => {
-                return fetch("/Cart/create-paypal-order", {
-                    method: "POST",
-                }).then((response) => {
-                    if (!response.ok) {
-                        return response.json().then(error => { throw error; });
-                    }
-                    return response.json();
-                }).then((order) => order.id)
-                    .catch(error => alert(error.message));
-            },
-            onApprove: (data, actions) => {
-                return fetch(`/Cart/capture-paypal-order?orderId=${data.orderID}`, {
-                    method: "post",
-                }).then((response) => {
-                    if (!response.ok) {
-                        return response.json().then(error => { throw error; });
-                    }
-                    
-                    window.location.href = "/Cart/PaymentSuccess";
-                }).catch(error => alert(error.message));
-            }
-        }).render('#paypal-button-container');
-    </script>
-}
+                        <div class="pt-5 mt-5 pb-5 border-top d-flex justify-content-md-end align-items-center">
+                            <a href="./checkout-shipping.html" class="btn btn-dark w-100 w-md-auto" role="button">Proceed to shipping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
+                <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
+                    <div class="pb-3">
+                        <!-- Cart Item-->
+                        @foreach (var item in Model)
+                        {
+                            <div class="row mx-0 py-4 g-0 border-bottom">
+                                <div class="col-2 position-relative">
+                                    <span class="checkout-item-qty">@item.Quantity</span>
+                                    <picture class="d-block border">
+                                        <img class="img-fluid" src="~/src/assets/Hinh/HangHoa/@item.Image" alt="@item.ProductName">
+                                    </picture>
+                                </div>
+                                <div class="col-9 offset-1 d-flex justify-content-between">
+                                    <div>
+                                        <a class="d-flex align-items-start mb-2" asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
+                                            @item.ProductName
+                                        </a>
+                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Price: $@item.Price</span>
+                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Quantity: @item.Quantity</span>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-end" style="height: 100%;">
+                                        <p class="fw-bold text-end text-muted m-0">$ @item.Subtotal</p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        <!-- / Cart Item-->
+                    </div>
+                    <div class="py-4 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <p class="m-0 fw-bolder fs-6">Subtotal</p>
+                            <p class="m-0 fs-6 fw-bolder">$ @Model.Sum(p => p.Subtotal).ToString("#,##0.00")</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <p class="m-0 fw-bolder fs-6">Shipping</p>
+                            <p class="m-0 fs-6 fw-bolder">$ 8</p>
+                        </div>
+                    </div>
+                    <div class="py-4 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="m-0 fw-bold fs-5">Grand Total</p>
+                            </div>
+                            <p class="m-0 fs-5 fw-bold">$ @Model.Sum(p => p.Subtotal + 8.00).ToString("#,##0.00")</p>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" placeholder="Enter your coupon code">
+                            <button class="btn btn-dark btn-sm px-4">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Content -->
+</section>
+
