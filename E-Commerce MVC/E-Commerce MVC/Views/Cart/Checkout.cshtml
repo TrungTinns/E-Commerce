@@ -5,12 +5,11 @@
 
 }
 
-<section class="mt-0 vh-lg-100 vh-100" style="overflow-y: auto;">
+<section class="mt-0 vh-lg-100">
     <!-- Page Content Goes Here -->
     <div class="container">
         <form asp-action="Checkout" asp-controller="Cart">
             <div class="row g-0 vh-lg-100">
-
                 <div class="col-12 col-lg-7 pt-5 pt-lg-10">
                     <div class="pe-lg-5">
                         <!-- Logo-->
@@ -27,7 +26,7 @@
                                        asp-controller="Cart">Your Cart</a>
                                 </li>
                                 <li class="me-4">
-                                    <a class="nav-link-checkout active"
+                                    <a class="nav-link-checkout nav-link-last active"
                                        asp-action="Checkout" asp-controller="Cart">Information</a>
                                 </li>
                             </ul>
@@ -117,58 +116,64 @@
                             <!-- Checkout Panel Information-->
                             <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4">Payment Information</h3>
 
-                            <div class="row">
+                           <div class="row">
+    <!-- Payment Option COD -->
+    <div class="col-12">
+        <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+            <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentCOD" value="COD" checked>
+            <label class="form-check-label" for="checkoutPaymentCOD">
+                <span class="d-flex justify-content-between align-items-start">
+                    <span>
+                        <span class="mb-0 fw-bolder d-block">COD</span>
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
 
-                                <!-- Payment Option-->
-                                <div class="col-12">
-                                    <div class="form-check form-group form-check-custom form-radio-custom mb-3">
-                                        <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentCOD" checked>
-                                        <label class="form-check-label" for="checkoutPaymentCOD">
-                                            <span class="d-flex justify-content-between align-items-start">
-                                                <span>
-                                                    <span class="mb-0 fw-bolder d-block">COD</span>
-                                                </span>
-                                                <i class="ri-paypal-line"></i>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
+    <!-- Payment Option PayPal -->
+    <div class="col-12">
+        <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+            <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentPaypal" value="PayPal">
+            <label class="form-check-label" for="checkoutPaymentPaypal">
+                <span class="d-flex justify-content-between align-items-start">
+                    <span>
+                        <span class="mb-0 fw-bolder d-block">PayPal</span>
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
 
-                                <!-- Payment Option-->
-                                <div class="col-12">
-                                    <div class="form-check form-group form-check-custom form-radio-custom mb-3">
-                                        <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentPaypal">
-                                        <label class="form-check-label" for="checkoutPaymentPaypal">
-                                            <span class="d-flex justify-content-between align-items-start">
-                                                <span>
-                                                    <span class="mb-0 fw-bolder d-block">PayPal</span>
-                                                </span>
-                                                <i class="ri-paypal-line"></i>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
+    <!-- Payment Option VNPAY -->
+    <div class="col-12">
+        <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+            <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentVNPAY" value="VNPay">
+            <label class="form-check-label" for="checkoutPaymentVNPAY">
+                <span class="d-flex justify-content-between align-items-start">
+                    <span>
+                        <span class="mb-0 fw-bolder d-block">VNPAY</span>
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+</div>
 
-                                <!-- Payment Option-->
-                                <div class="col-12">
-                                    <div class="form-check form-group form-check-custom form-radio-custom mb-3">
-                                        <input class="form-check-input" type="radio" name="payment" id="checkoutPaymentVNPAY">
-                                        <label class="form-check-label" for="checkoutPaymentVNPAY">
-                                            <span class="d-flex justify-content-between align-items-start">
-                                                <span>
-                                                    <span class="mb-0 fw-bolder d-block">VNPAY</span>
-                                                </span>
-                                                <i class="ri-paypal-line"></i>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
+<div class="pt-5 mt-5 pb-5 border-top d-flex justify-content-md-end align-items-center">
+    <!-- COD Submit Button -->
+    <div id="submitCOD" class="payment-button">
+        <input type="submit" name="payment" class="btn btn-dark w-100 w-md-auto" value="Complete Order">
+    </div>
 
-                            </div>
-                            
-                            <div class="pt-5 mt-5 pb-5 border-top d-flex justify-content-md-end align-items-center">
-                                <button type="submit" class="btn btn-dark w-100 w-md-auto">Complete Order</button>
-                            </div>
+    <!-- VNPay Submit Button (Initially Hidden) -->
+    <div id="submitVNPay" class="payment-button">
+        <input type="submit" name="payment" class="btn btn-dark w-100 w-md-auto" value="VNPay">
+    </div>
+
+    <!-- PayPal Button (Initially Hidden) -->
+    <div id="paypal-button-container" class="form-item mt-3 payment-button" style="max-width:1000px;"></div>
+</div>
                         </div>
                     </div>
                 </div>
@@ -227,6 +232,7 @@
         </form>
     </div>
     <!-- /Page Content -->
+    <script src="https://sandbox.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientId"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const shippingOptions = document.querySelectorAll('.shipping-option');
@@ -253,6 +259,65 @@
             // Initialize totals
             updateTotals();
         });
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'silver',
+                tagline: 'false'
+            },
+            createOrder: (data, actions) => {
+                return fetch("/Cart/create-paypal-order", {
+                    method: "POST",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+                    return response.json();
+                }).then((order) => order.id)
+                    .catch(error => alert(error.message));
+            },
+            onApprove: (data, actions) => {
+                return fetch(`/Cart/capture-paypal-order?orderId=${data.orderID}`, {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+                    
+                    window.location.href = "/Cart/PaymentSuccess";
+                }).catch(error => alert(error.message));
+            }
+        }).render('#paypal-button-container');
+         document.addEventListener('DOMContentLoaded', function () {
+        const paymentOptions = document.querySelectorAll('input[name="payment"]');
+        const submitCOD = document.getElementById('submitCOD');
+        const submitVNPay = document.getElementById('submitVNPay');
+        const paypalButtonContainer = document.getElementById('paypal-button-container');
+
+        function handlePaymentOptionChange() {
+            if (document.getElementById('checkoutPaymentCOD').checked) {
+                submitCOD.classList.remove('d-none');
+                submitVNPay.classList.add('d-none');
+                paypalButtonContainer.classList.add('d-none');
+            } else if (document.getElementById('checkoutPaymentVNPAY').checked) {
+                submitVNPay.classList.remove('d-none');
+                submitCOD.classList.add('d-none');
+                paypalButtonContainer.classList.add('d-none');
+            } else if (document.getElementById('checkoutPaymentPaypal').checked) {
+                paypalButtonContainer.classList.remove('d-none');
+                submitCOD.classList.add('d-none');
+                submitVNPay.classList.add('d-none');
+            }
+        }
+
+        // Add event listeners to all payment option radio buttons
+        paymentOptions.forEach(option => {
+            option.addEventListener('change', handlePaymentOptionChange);
+        });
+
+        // Initialize based on the currently selected payment option
+        handlePaymentOptionChange();
+    });
     </script>
 </section>
 
