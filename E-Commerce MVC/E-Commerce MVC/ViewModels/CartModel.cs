@@ -4,5 +4,6 @@
     {
         public int Quantity { get; set; }
         public double Subtotal { get; set; }
+        public List<CartItem> Items { get; set; } = new List<CartItem>();
     }
 }

@@ -1,6 +1,59 @@
 ﻿@model E_Commerce_MVC.ViewModels.CartModel
 
-<a asp-controller="Cart" asp-action="Index" class="position-relative me-4 my-auto">
-    <i class="fa fa-shopping-bag fa-2x"></i>
-    <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">@Model.Quantity</span>
-</a>
+<button asp-controller="Cart" asp-action="Index" class="nav-link me-0 disable-child-pointer border-0 p-0 bg-transparent text-body" type="button">
+    Bag (@Model.Quantity)
+</button>
+<div class="cart-dropdown dropdown-menu">
+    <!-- Cart Header-->
+    <div class="d-flex justify-content-between align-items-center border-bottom pt-3 pb-4">
+        <h6 class="fw-bolder m-0">Cart Summary (@Model.Quantity)</h6>
+        <i class="ri-close-circle-line text-muted ri-lg cursor-pointer btn-close-cart"></i>
+    </div>
+    <!-- / Cart Header-->
+    <!-- Cart Items-->
+    <div>
+        @foreach (var item in Model.Items)
+        {
+            <div class="row mx-0 py-4 g-0 border-bottom">
+                <div class="col-2 position-relative">
+                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
+                        <picture class="d-block ">
+                            <img class="img-fluid" src="~/src/assets/Hinh//HangHoa/@item.Image" alt="@item.ProductName">
+                        </picture>
+                    </a>
+                </div>
+                <div class="col-9 offset-1 d-flex justify-content-between">
+                    <div>
+                        <a class="d-flex align-items-start mb-2" asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
+                            @item.ProductName
+                        </a>
+                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Price: $@item.Price</span>
+                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Quantity: @item.Quantity</span>
+                    </div>
+                    <!-- Remove Button (X) -->
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <a class="text-decoration-none text-black fw-bolder" asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" style="font-size: 1.5rem;">
+                            <i class="ri-close-line ms-3"></i>
+                        </a>
+                        <p class="fw-bold text-end text-muted m-0">$ @item.Subtotal</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- /Cart Items-->
+    <!-- Cart Summary-->
+    <div>
+        <div class="pt-3">
+            <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-start mb-4 mb-md-2">
+                <div>
+                    <p class="m-0 fw-bold fs-5">Grand Total</p>
+                </div>
+                <p class="m-0 fs-5 fw-bold">$ @Model.Subtotal</p>
+            </div>
+        </div>
+        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-dark w-100 text-center mt-4" role="button">View Cart</a>
+        <a asp-action="Checkout" asp-controller="Cart" class="btn btn-dark w-100 text-center mt-2" role="button">Proceed To Checkout</a>
+    </div>
+    <!-- / Cart Summary-->
+</div>
