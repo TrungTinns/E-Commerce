@@ -1,6 +1,36 @@
 ﻿<form asp-action="Search" asp-controller="Product">
     <!-- Filters-->
     <div>
+        <!-- Brands Filter -->
+        <div class="py-4 widget-filter border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true"
+               aria-controls="filter-modal-brands">
+                Name
+            </a>
+            <div id="filter-modal-brands" class="collapse show">
+                <div class="input-group my-3 py-1">
+                    <input type="search" class="form-control py-2 filter-search rounded" placeholder="Search"
+                           aria-label="Search" aria-describedby="search-icon-1" name="query">
+                    <span class="input-group-text bg-transparent p-2 position-absolute top-10 end-0 border-0 z-index-20">
+                        <i class="ri-search-2-line text-muted"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- / Brands Filter -->
+
+        <div class="py-4 widget-filter border-top">
+            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+               data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true"
+               aria-controls="filter-modal-brands">
+                Brands
+            </a>
+            <div id="filter-modal-brands" class="collapse show">
+                @await Component.InvokeAsync("CategoryMenu")
+            </div>
+        </div>
+
         <!-- Price Filter -->
         <div class="py-4 widget-filter widget-filter-price border-top">
             <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
@@ -23,24 +53,6 @@
             </div>
         </div>
         <!-- / Price Filter -->
-        <!-- Brands Filter -->
-        <div class="py-4 widget-filter border-top">
-            <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
-               data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true"
-               aria-controls="filter-modal-brands">
-                Brands
-            </a>
-            <div id="filter-modal-brands" class="collapse show">
-                <div class="input-group my-3 py-1">
-                    <input type="search" class="form-control py-2 filter-search rounded" placeholder="Search"
-                           aria-label="Search" aria-describedby="search-icon-1" name="query">
-                    <span class="input-group-text bg-transparent p-2 position-absolute top-10 end-0 border-0 z-index-20">
-                        <i class="ri-search-2-line text-muted"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <!-- / Brands Filter -->
         <!-- Sizes Filter -->
         <div class="py-4 widget-filter border-top">
             <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
