@@ -55,14 +55,14 @@ namespace E_Commerce_MVC.Controllers
 				item.Quantity += quantity;
 			}
 			HttpContext.Session.Set(MySetting.CART_KEY, cart);
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", "Product");
 		}
 
 		public IActionResult RemoveCart(int id)
 		{
 			var cart = Cart;
 			var item = cart.SingleOrDefault(p => p.ProductId == id);
-			if (item == null)
+			if (item != null)
 			{
 				cart.Remove(item);
 				HttpContext.Session.Set(MySetting.CART_KEY, cart);
