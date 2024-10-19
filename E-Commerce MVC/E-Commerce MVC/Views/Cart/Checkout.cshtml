@@ -113,10 +113,11 @@
                                     </span>
                                 </label>
                             </div>
+                            <input type="hidden" name="SelectedDeliveryOption" id="SelectedDeliveryOption" value="Economical" />
                             <!-- Checkout Panel Information-->
                             <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4">Payment Information</h3>
 
-                           <div class="row">
+                            <div class="row">
                                 <!-- Payment Option COD -->
                                 <div class="col-12">
                                     <div class="form-check form-group form-check-custom form-radio-custom mb-3">
@@ -269,6 +270,12 @@
             createOrder: (data, actions) => {
                 return fetch("/Cart/create-paypal-order", {
                     method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        deliveryOption: document.getElementById('SelectedDeliveryOption').value
+                    })
                 }).then((response) => {
                     if (!response.ok) {
                         return response.json().then(error => { throw error; });
@@ -284,41 +291,57 @@
                     if (!response.ok) {
                         return response.json().then(error => { throw error; });
                     }
-                    
+
                     window.location.href = "/Cart/PaymentSuccess";
                 }).catch(error => alert(error.message));
             }
         }).render('#paypal-button-container');
-         document.addEventListener('DOMContentLoaded', function () {
-        const paymentOptions = document.querySelectorAll('input[name="payment"]');
-        const submitCOD = document.getElementById('submitCOD');
-        const submitVNPay = document.getElementById('submitVNPay');
-        const paypalButtonContainer = document.getElementById('paypal-button-container');
+        document.addEventListener('DOMContentLoaded', function () {
+            const paymentOptions = document.querySelectorAll('input[name="payment"]');
+            const submitCOD = document.getElementById('submitCOD');
+            const submitVNPay = document.getElementById('submitVNPay');
+            const paypalButtonContainer = document.getElementById('paypal-button-container');
 
-        function handlePaymentOptionChange() {
-            if (document.getElementById('checkoutPaymentCOD').checked) {
-                submitCOD.classList.remove('d-none');
-                submitVNPay.classList.add('d-none');
-                paypalButtonContainer.classList.add('d-none');
-            } else if (document.getElementById('checkoutPaymentVNPAY').checked) {
-                submitVNPay.classList.remove('d-none');
-                submitCOD.classList.add('d-none');
-                paypalButtonContainer.classList.add('d-none');
-            } else if (document.getElementById('checkoutPaymentPaypal').checked) {
-                paypalButtonContainer.classList.remove('d-none');
-                submitCOD.classList.add('d-none');
-                submitVNPay.classList.add('d-none');
+            function handlePaymentOptionChange() {
+                if (document.getElementById('checkoutPaymentCOD').checked) {
+                    submitCOD.classList.remove('d-none');
+                    submitVNPay.classList.add('d-none');
+                    paypalButtonContainer.classList.add('d-none');
+                } else if (document.getElementById('checkoutPaymentVNPAY').checked) {
+                    submitVNPay.classList.remove('d-none');
+                    submitCOD.classList.add('d-none');
+                    paypalButtonContainer.classList.add('d-none');
+                } else if (document.getElementById('checkoutPaymentPaypal').checked) {
+                    paypalButtonContainer.classList.remove('d-none');
+                    submitCOD.classList.add('d-none');
+                    submitVNPay.classList.add('d-none');
+                }
             }
-        }
 
-        // Add event listeners to all payment option radio buttons
-        paymentOptions.forEach(option => {
-            option.addEventListener('change', handlePaymentOptionChange);
+            // Add event listeners to all payment option radio buttons
+            paymentOptions.forEach(option => {
+                option.addEventListener('change', handlePaymentOptionChange);
+            });
+
+            // Initialize based on the currently selected payment option
+            handlePaymentOptionChange();
         });
+        document.addEventListener('DOMContentLoaded', function () {
+            const shippingOptions = document.querySelectorAll('.shipping-option');
+            const selectedDeliveryOptionInput = document.getElementById('SelectedDeliveryOption');
 
-        // Initialize based on the currently selected payment option
-        handlePaymentOptionChange();
-    });
+            function updateSelectedDeliveryOption() {
+                const selectedOption = document.querySelector('.shipping-option:checked');
+                selectedDeliveryOptionInput.value = selectedOption.value;
+            }
+
+            shippingOptions.forEach(option => {
+                option.addEventListener('change', updateSelectedDeliveryOption);
+            });
+
+            // Initialize selected delivery option
+            updateSelectedDeliveryOption();
+        });
     </script>
 </section>
 

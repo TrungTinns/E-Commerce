@@ -115,7 +115,7 @@ namespace E_Commerce_MVC.Controllers
 					DienThoai = model.Phone ?? user.DienThoai,
 					NgayDat = DateTime.Now,
 					CachThanhToan = "COD",
-					CachVanChuyen = "",
+					CachVanChuyen = model.DeliveryOption,
 					MaTrangThai = 0,
 					GhiChu = model.Note,
 				};
@@ -168,7 +168,6 @@ namespace E_Commerce_MVC.Controllers
 			var subtotal = Cart.Sum(p => p.Subtotal).ToString();
 			var currency = "USD";
 			var RefOrderId = "DH" + DateTime.Now.Ticks.ToString();
-
 			try
 			{
 				var res = await _paypalClient.CreateOrder(subtotal, currency, RefOrderId);
@@ -183,7 +182,7 @@ namespace E_Commerce_MVC.Controllers
 
 		[Authorize]
 		[HttpPost("/Cart/capture-paypal-order")]
-		public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+		public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken, string SelectedDeliveryOption)
 		{
 			try
 			{
@@ -199,7 +198,7 @@ namespace E_Commerce_MVC.Controllers
 					DienThoai = user.DienThoai,
 					NgayDat = DateTime.Now,
 					CachThanhToan = "PayPal",
-					CachVanChuyen = "",
+					CachVanChuyen = SelectedDeliveryOption,
 					MaTrangThai = 0,
 					GhiChu = "",
 				};
