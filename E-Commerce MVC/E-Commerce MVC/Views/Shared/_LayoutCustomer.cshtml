@@ -1,142 +1,178 @@
 ﻿<!DOCTYPE html>
+<html lang="en">
 
-<html>
+<!-- Head -->
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <!-- Page Meta Tags-->
     <meta charset="utf-8">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <!-- Custom Google Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+          rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/favicon/favicon-16x16.png">
+    <link rel="mask-icon" href="~/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
-    <!-- Libraries Stylesheet -->
-    <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/assets/css/libs.bundle.css" />
 
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/assets/css/theme.bundle.css" />
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fix for custom scrollbar if JS is disabled-->
+    <noscript>
+        <style>
+            /* Reinstate scrolling for non-JS clients */
+            .simplebar-content-wrapper {
+                overflow: auto;
+            }
+        </style>
+    </noscript>
 
-    <!-- Template Stylesheet -->
-    <link href="~/css/style.css" rel="stylesheet">
+    <!-- Page Title -->
+    <title>@ViewBag.Title</title>
+
     @RenderSection("Styles", required: false)
 
 </head>
-<body>
-    <div>
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
 
-        <!-- Navbar start -->
-        <div class="container-fluid fixed-top">
-            <div class="container topbar bg-primary d-none d-lg-block">
-                <div class="d-flex justify-content-between">
-                    <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-                    </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
-                </div>
-            </div>
-            <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a asp-action="Index" asp-controller="Home" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
-                    </button>
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">Home</a>
-                            <a asp-controller="Product" asp-action="Index" class="nav-item nav-link">Shop</a>
-                            <a asp-controller="User" asp-action="SignUp" class="nav-item nav-link">Register </a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a asp-controller="Cart" asp-action="Index" class="dropdown-item">Cart</a>
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <a asp-controller="User" asp-action="Profile" class="dropdown-item">Profile</a>
-                                        <a asp-controller="User" asp-action="Logout" class="dropdown-item">Logout</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-controller="User" asp-action="SignUp" class="dropdown-item">Sign Up</a>
-                                        <a asp-controller="User" asp-action="SignIn" class="dropdown-item">Sign In</a>
-                                        <a asp-controller="User" asp-action="ForgetPassword" class="dropdown-item">Forget password?</a>
-                                    }
+<body class="">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white flex-column border-0">
+        <div class="container-fluid">
+            <div class="w-100">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                    <!-- Logo-->
+                    <a asp-action="Index" asp-controller="Home" class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0 order-0">
+                        <div class="d-flex align-items-center">
+                            <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd" /></svg>
+                        </div>
+                    </a>
+                    <!-- / Logo-->
+                    <!-- Navbar Icons-->
+                    <ul class="list-unstyled mb-0 d-flex align-items-center order-1 order-lg-2 nav-sidelinks">
+
+                        <!-- Mobile Nav Toggler-->
+                        <li class="d-lg-none">
+                            <span class="nav-link text-body d-flex align-items-center cursor-pointer" data-bs-toggle="collapse"
+                                  data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                                  aria-label="Toggle navigation"><i class="ri-menu-line ri-lg me-1"></i> Menu</span>
+                        </li>
+                        <!-- /Mobile Nav Toggler-->
+                        <!-- Navbar Search-->
+                        <li class="d-none d-sm-block">
+                            <span class="nav-link text-body search-trigger cursor-pointer" data-bs-toggle="modal" data-bs-target="#searchModal">Search</span>
+
+                            <!-- Search navbar overlay-->
+                            <div class="navbar-search d-none" id="searchModal">
+                                <div class="input-group mb-3 h-100">
+                                    <span id="searchButton"  class="input-group-text px-4 bg-transparent border-0">
+                                        <i class="ri-search-line ri-lg"></i>
+                                    </span>
+                                    <input id="searchText" type="search" aria-describedby="searchButton" class="form-control text-body bg-transparent border-0"
+                                           placeholder="Enter your search terms...">
+                                    <span class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0">
+                                        <i class="ri-close-circle-line ri-lg"></i>
+                                    </span>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        </div>
-                        <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            
+                            <div class="search-overlay"></div>
+                            <!-- / Search navbar overlay-->
+                        </li>
+                        <!-- /Navbar Search-->
+                        <!-- Navbar Cart Icon-->
+                        <li class="ms-1 d-inline-block position-relative dropdown-cart">
                             @await Component.InvokeAsync("Cart")
+                        </li>
+                        <!-- /Navbar Cart Icon-->
+                        <!-- Navbar Login-->
+                        <li class="ms-1 d-none d-lg-inline-block dropdown">
+                            <a class="text-body nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Account
+                                </a>
+                                <ul class="dropdown-menu">
+                                     @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="SignUp">Sign up</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="SignIn">Sign in</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="ForgetPassword">Forget password?</a></li>
+                                }                      
+                                </ul>
+                        </li>
+                        <!-- /Navbar Login-->
+                    </ul>
+                    <!-- Navbar Icons-->
+                    <!-- Main Navigation-->
+                    <div class="flex-shrink-0 collapse navbar-collapse navbar-collapse-light w-auto flex-grow-1 order-2 order-lg-1"
+                         id="navbarNavDropdown">
 
-                            <a asp-action="SignIn" asp-controller="User" class="my-auto" title="Sign In">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
+                        <!-- Menu-->
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Home" class="nav-link" role="button">
+                                    Home
+                                </a>
+                            </li>
 
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <li class="nav-item">
+                                <a asp-controller="Product" asp-action="Index" class="nav-link" role="button">
+                                    Product
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Category
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @await Component.InvokeAsync("CategoryMenu")
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./category.html" role="button">
+                                    Contact
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- / Menu-->
+
                     </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input id="searchText" type="search" class="form-control p-3" placeholder="keywords" aria-describedby="searchButton">
-                            <span id="searchButton" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
+                    <!-- / Main Navigation-->
+
+
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->
 
-        <div style="min-height:400px"class="hero-header">@RenderBody()</div>
-        
+    </nav>
 
-        @await Html.PartialAsync("_Footer")
-    </div>
+    <!-- RenderBody -->
+    <div style="min-height:400px" class="hero-header">@RenderBody()</div>
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+    <!-- Footer -->
+    @await Html.PartialAsync("_Footer")
 
+    <!-- Vendor JS -->
+    <script src="~/assets/js/vendor.bundle.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/easing/easing.min.js"></script>
-    <script src="~/lib/waypoints/waypoints.min.js"></script>
-    <script src="~/lib/lightbox/js/lightbox.min.js"></script>
-    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="~/js/main.js"></script>
+    <!-- Theme JS -->
+    <script src="~/assets/js/theme.bundle.js"></script>
     @RenderSection("Scripts", required: false)
     <script>
         $(document).ready(function () {

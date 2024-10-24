@@ -1,10 +1,15 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
-<div class="container">
-<h2>Welcome @Context.User.Identity.Name</h2>
-<a asp-action="Logout">Logout</a>
-</div>
+<!-- Main Section-->
+<section class="mt-0 ">
+    <!-- Page Content Goes Here -->
+    <!-- Breadcrumbs-->
+    <div class="bg-dark py-6">
+        <div class="container-fluid ">
+            <h1 class="mb-1 fs-2 fw-bold text-white text-center">Welcome @Context.User.Identity.Name</h1>
+        </div>
+    </div>
+    <!-- / Breadcrumbs-->
+</section>

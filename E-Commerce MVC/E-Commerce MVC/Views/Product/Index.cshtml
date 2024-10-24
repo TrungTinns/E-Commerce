@@ -4,31 +4,34 @@
     Layout = "_ProductList";
 }
 
-<!-- Single Page Header start -->
-@section BreadCum {
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
-        </ol>
-    </div>
-}
-<!-- Single Page Header End -->
-<!-- Fruits Shop Start-->
-@await Html.PartialAsync("ProductItem", Model)
-
-<div class="col-12">
-    <div class="pagination d-flex justify-content-center mt-5">
-        <a href="#" class="rounded">&laquo;</a>
-        <a href="#" class="active rounded">1</a>
-        <a href="#" class="rounded">2</a>
-        <a href="#" class="rounded">3</a>
-        <a href="#" class="rounded">4</a>
-        <a href="#" class="rounded">5</a>
-        <a href="#" class="rounded">6</a>
-        <a href="#" class="rounded">&raquo;</a>
+<!-- Category Top Banner -->
+@section Banner{ 
+<div class="py-10 bg-img-cover bg-overlay-dark position-relative overflow-hidden bg-pos-center-center rounded-0"
+         style="background-image: url('@Url.Content("~/src/assets/images/banners/banner-category-top.jpg")');">
+    <div class="container-fluid position-relative z-index-20" data-aos="fade-right" data-aos-delay="300">
+        <h1 class="fw-bold display-6 mb-4 text-white">Latest Arrivals</h1>
+        <div class="col-12 col-md-6">
+            <p class="text-white mb-0 fs-5">
+                When it's time to head out and get your Kicks on, have a look at our latest arrivals. Whether you're into Nike, Adidas, Dunks or New Balance, we really have something for everyone!
+            </p>
+        </div>
     </div>
 </div>
-<!-- Fruits Shop End-->
+}
+<!-- Category Top Banner -->
+
+<!-- Category Toolbar-->
+    @section Breadcrumb {
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Sneakers</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">New Releases</li>
+                </ol>
+            </nav>
+        </div>
+    }
+<!-- /Category Toolbar-->
+
+@await Html.PartialAsync("ProductItem", Model)

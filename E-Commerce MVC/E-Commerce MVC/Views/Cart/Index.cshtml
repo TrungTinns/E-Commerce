@@ -1,113 +1,93 @@
 ﻿@model IEnumerable<E_Commerce_MVC.ViewModels.CartItem>
 @{
     ViewData["Title"] = "Cart";
+    Layout = "_Layout";
 }
 
-<!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Cart</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Cart</li>
-    </ol>
-</div>
-<!-- Single Page Header End -->
-<!-- Cart Page Start -->
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Products</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach(var item in Model)
-                    {
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="~/Hinh/HangHoa/@item.Image" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="@item.ProductName">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">
-                                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
-                                        @item.ProductName
-                                    </a>
-                                </p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">$ @item.Price</p>
-                            </td>
-                            <td>
-                                <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="@item.Quantity">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">$ @item.Subtotal</p>
-                            </td>
-                            <td>
-                                <a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
-                                </a>
-                            </td>
-
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
-        </div>
-        <div class="row g-4 justify-content-end">
-            <div class="col-8"></div>
-            <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                <div class="bg-light rounded">
-                    <div class="p-4">
-                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                        <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">$ @Model.Sum(p => p.Subtotal)</p>
+<section class="mt-0 overflow-lg-hidden vh-lg-100">
+    <!-- Page Content Goes Here -->
+    <div class="container">
+        <div class="row g-0 vh-lg-100">
+            <div class="col-12 col-lg-7 pt-5 pt-lg-10 vh-100" style="overflow-y: auto;">
+                <div class="pe-lg-5">
+                    <!-- Logo-->
+                    <a asp-action="Index" asp-controller="Home" class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0 order-0">
+                        <div class="d-flex align-items-center">
+                            <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd" /></svg>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Shipping</h5>
-                            <div class="">
-                                <p class="mb-0">Flat rate: $3.00</p>
+                    </a>
+                    <!-- / Logo-->
+                    <nav class="d-none d-md-block">
+                        <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                            <li class="me-4">
+                                <a class="nav-link-checkout active"
+                                   asp-controller="Cart">Your Cart</a>
+                            </li>
+                            <li class="me-4">
+                                <a class="nav-link-checkout nav-link-last"
+                                   asp-action="Checkout" asp-controller="Cart">Information</a>
+                            </li>
+                        </ul>
+                    </nav>                        
+                    <div class="mt-5">
+                        <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Your Cart</h3>
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <tbody class="border-0">
+                                    @foreach (var item in Model)
+                                    {
+                                        <!-- Cart Item-->
+                                        <div class="row mx-0 py-4 g-0 border-bottom">
+                                            <div class="col-2 position-relative">
+                                                <picture class="d-block border">
+                                                    <img class="img-fluid" src="~/src/assets/Hinh/HangHoa/@item.Image" alt="@item.ProductName">
+                                                </picture>
+                                            </div>
+                                            <div class="col-9 offset-1 d-flex justify-content-between">
+                                                <div>
+                                                    <a class="d-flex align-items-start mb-2" asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
+                                                        @item.ProductName 
+                                                    </a>
+                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Price: $@item.Price</span>
+                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Quantity: @item.Quantity</span>
+                                                </div>
+                                                <!-- Remove Button (X) -->
+                                                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                                                    <a class="text-decoration-none text-black fw-bolder" asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.ProductId" style="font-size: 1.5rem;">
+                                                        <i class="ri-close-line ms-3"></i>
+                                                    </a>
+                                                    <p class="fw-bold text-end text-muted m-0">$ @item.Subtotal</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / Cart Item-->
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
+                <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
+                    <div class="pb-4 border-bottom">
+                        <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
+                            <div>
+                                <p class="m-0 fw-bold fs-5">Grand Total</p>
                             </div>
+                            <p class="m-0 fs-5 fw-bold">$ @Model.Sum(p => p.Subtotal)</p>
                         </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
                     </div>
-                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                        <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$ @Model.Sum(p => p.Subtotal)</p>
+                    <div class="py-4">
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" placeholder="Enter coupon code">
+                            <button class="btn btn-secondary btn-sm px-4">Apply</button>
+                        </div>
                     </div>
-                    <a class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" asp-action="Checkout" asp-controller="Cart">Proceed Checkout</a>
+                    <a asp-action="Checkout" asp-controller="Cart" class="btn btn-dark w-100 text-center" role="button">Proceed to checkout</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Cart Page End -->
+    <!-- /Page Content -->
+</section>
